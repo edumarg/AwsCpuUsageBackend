@@ -9,8 +9,8 @@ app.use(express.json());
 app.use("/api/cpu", cpuData);
 
 if (
-  !config.get("accessID") ||
-  !config.get("accessKey") ||
+  !config.get("AWS_ACCESS_KEY_ID") ||
+  !config.get("AWS_SECRET_ACCESS_KEY") ||
   !config.get("region")
 ) {
   console.log(
@@ -18,10 +18,6 @@ if (
   );
   process.exit(1);
 }
-
-const accessID = config.get("accessID");
-const accessKey = config.get("accessKey");
-const region = config.get("region");
 
 const port = process.env.PORT || 3000;
 app.listen(3000, () => console.log(`Listening on port ${port}...`));
