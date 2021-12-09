@@ -15,7 +15,9 @@ const cwClient = new CloudWatchClient({
 });
 
 const buildParams = (IP, startTime, period) => {
-  const start = new Date(startTime);
+  const start = startTime
+    ? new Date(startTime)
+    : new Date(Date.now() - 3600000);
   const now = new Date();
   const params = {
     Dimensions: [
@@ -26,7 +28,7 @@ const buildParams = (IP, startTime, period) => {
     ],
     Namespace: "AWS/EC2",
     MetricName: "CPUUtilization",
-    Period: period,
+    Period: period || 60,
     Unit: "Percent",
     StartTime: start,
     EndTime: now,
@@ -37,7 +39,6 @@ const buildParams = (IP, startTime, period) => {
 
 const getCPUUtilization = async (IP, startTime, period) => {
   const params = buildParams(IP, startTime, period);
-  console.log("params", params);
   try {
     const data = await cwClient.send(new GetMetricStatisticsCommand(params));
     console.log("Success. Metrics:", JSON.stringify(data));

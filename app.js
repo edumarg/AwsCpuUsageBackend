@@ -1,9 +1,9 @@
-const express = require("express");
-const cors = require("cors");
-const config = require("config");
+const express = require("express"); // https://www.npmjs.com/package/express
+const cors = require("cors"); // https://www.npmjs.com/package/cors
+const config = require("config"); // www.npmjs.com/package/config
 const { cpuData } = require("./routes/cpuData");
-const app = express();
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/cpu", cpuData);
@@ -19,5 +19,5 @@ if (
   process.exit(1);
 }
 
-const port = process.env.PORT || 3000;
-app.listen(3000, () => console.log(`Listening on port ${port}...`));
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log(`Listening on port ${port}...`));
