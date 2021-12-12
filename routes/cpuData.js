@@ -5,9 +5,13 @@ const getCPUUtilization = require("../startup/amazon");
 // CPU usage
 router.post("", async (req, res) => {
   const data = req.body;
-  const { IP, startTime, period } = data;
+  const { instanceID, startTime, period } = data;
   try {
-    const CPUUtilization = await getCPUUtilization(IP, startTime, period);
+    const CPUUtilization = await getCPUUtilization(
+      instanceID,
+      startTime,
+      period
+    );
     if (CPUUtilization?.Datapoints) res.send(CPUUtilization.Datapoints);
   } catch (e) {
     // else res.sendStatus(400);
